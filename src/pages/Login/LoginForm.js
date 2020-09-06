@@ -6,24 +6,26 @@ import Button from "../../components/Forms/Button";
 import useForm from "../../hooks/useForm";
 
 function LoginForm() {
-  const username = useForm("email");
+  const username = useForm();
   const password = useForm();
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    fetch("https://dogsapi.origamid.dev/json/jwt-auth/v1/token", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(),
-    })
-      .then((resp) => resp.json())
-      .then((json) => {
-        console.log(json);
-        return json;
-      });
+    if (username.validate() && password.validate()) {
+      fetch("https://dogsapi.origamid.dev/json/jwt-auth/v1/token", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(),
+      })
+        .then((resp) => resp.json())
+        .then((json) => {
+          console.log(json);
+          return json;
+        });
+    }
   };
 
   return (
