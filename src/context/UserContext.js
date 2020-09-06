@@ -1,5 +1,6 @@
 import React from "react";
 import { TOKEN_POST, USER_GET, TOKEN_VALIDATE_POST } from "../api";
+import { useNavigate } from "react-router-dom";
 
 export const UserContext = React.createContext();
 
@@ -8,6 +9,8 @@ export const UserStorage = ({ children }) => {
   const [login, setLogin] = React.useState(null);
   const [error, setError] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
+
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     async function autoLogin() {
@@ -32,7 +35,7 @@ export const UserStorage = ({ children }) => {
     }
 
     autoLogin();
-  }, []);
+  }, [userLogout]);
 
   async function getUser(token) {
     const { url, options } = await USER_GET(token);
@@ -44,12 +47,23 @@ export const UserStorage = ({ children }) => {
   }
 
   async function userLogin(username, password) {
-    const { url, options } = await TOKEN_POST({ username, password });
-    const tokenRes = await fetch(url, options);
-    const { token } = await tokenRes.json();
+    try {
+      setError(null);
+      setLoading(true);
+      const { url, options } = await TOKEN_POST({ username, password });
+      const tokenRes = await fetch(url, options);
+      if (!tokenRes.ok) throw new Error(`Error ${tokenRes.statusText}`);
+      const { token } = await tokenRes.json();
 
-    window.localStorage.setItem("token", token);
-    getUser(token);
+      window.localStorage.setItem("token", token);
+      await getUser(token);
+      navigate("/conta");
+    } catch (err) {
+      setError(err.message);
+      setLogin(false);
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function userLogout() {
@@ -58,10 +72,13 @@ export const UserStorage = ({ children }) => {
     setLogin(false);
     setLoading(false);
     await window.localStorage.removeItem("token");
+    navigate("/login");
   }
 
   return (
-    <UserContext.Provider value={{ userLogin, userLogout, data }}>
+    <UserContext.Provider
+      value={{ userLogin, userLogout, data, error, loading, login }}
+    >
       {children}
     </UserContext.Provider>
   );
