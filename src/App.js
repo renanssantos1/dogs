@@ -10,6 +10,8 @@ import Footer from "./components/Footer";
 //pages
 import Home from "./pages/Home";
 import Login from "./pages/Login/Login";
+import User from "./pages/User/User";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 function App() {
   return (
@@ -20,7 +22,9 @@ function App() {
 
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/login/*" element={<Login />} />
+            <Route path="login/*" element={<Login />} />
+
+            <ProtectedRoute path="conta/*" element={<User />} />
           </Routes>
 
           <Footer />
