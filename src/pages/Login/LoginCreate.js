@@ -4,14 +4,24 @@ import Input from "../../components/Forms/Input";
 import Button from "../../components/Forms/Button";
 
 import useForm from "../../hooks/useForm";
+import { USER_POST } from "../../api";
 
 function LoginCreate() {
   const username = useForm();
   const email = useForm("email");
   const password = useForm("password");
 
-  function handleSubmit(evt) {
+  async function handleSubmit(evt) {
     evt.preventDefault();
+    const { url, options } = USER_POST({
+      username: username.value,
+      email: email.value,
+      password: password.value,
+    });
+    const response = await fetch(url, options);
+    const json = await response.json();
+
+    console.log(json);
   }
 
   return (
