@@ -14,15 +14,15 @@ function UserHeaderNav() {
   const { userLogout } = React.useContext(UserContext);
   return (
     <nav className={styles.nav}>
-      <NavLink to="/conta">
+      <NavLink to="/conta" end activeClassName={styles.active}>
         <MinhasFotos />
         {mobile && " Minhas Fotos"}
       </NavLink>
-      <NavLink to="/conta/estatisticas">
+      <NavLink to="/conta/estatisticas" activeClassName={styles.active}>
         <Estatisticas />
         {mobile && "Estatisticas"}
       </NavLink>
-      <NavLink to="/conta/postar">
+      <NavLink to="/conta/postar" activeClassName={styles.active}>
         <AdicionarFoto />
         {mobile && "Adicionar foto"}
       </NavLink>

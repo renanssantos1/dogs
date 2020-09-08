@@ -13,8 +13,8 @@ function User() {
       <Routes>
         <Route path="/" element={<Feed />} />
 
-        <Route path="posta" element={<UserPhotoPost />} />
-        <Route path="posta" element={<UserStats />} />
+        <Route path="postar" element={<UserPhotoPost />} />
+        <Route path="estatisticas" element={<UserStats />} />
       </Routes>
     </section>
   );
