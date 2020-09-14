@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./FeedPhotos.module.css";
 import FeedPhotosItem from "./FeedPhotosItem";
 
 import useFetch from "../../hooks/useFetch";
@@ -26,9 +27,11 @@ function FeedPhotos() {
   if (loading) return <Loading />;
   if (data)
     return (
-      <div>
-        <FeedPhotosItem />
-      </div>
+      <ul className={`${styles.feed}  animeLeft`}>
+        {data.map((photo) => (
+          <FeedPhotosItem key={photo.id} photo={photo} />
+        ))}
+      </ul>
     );
   else return null;
 }
