@@ -1,0 +1,35 @@
+.photo {
+  margin: auto;
+  height: 36rem;
+  border-radius: 0.2rem;
+  background: #fff;
+  display: grid;
+  grid-template-columns: 36rem 20rem;
+  grid-template-rows: auto 1fr auto;
+  overflow: hidden;
+}
+
+.details {
+  padding: 2rem 2rem 0 2rem;
+}
+
+.img {
+  grid-row: 1 / 4;
+}
+
+.commnets {
+  padding: 0 2rem;
+}
+
+@media (max-width: 64rem) {
+  .photo {
+    height: auto;
+    overflow-y: auto;
+    grid-template-columns: minmax(20rem, 40rem);
+    max-height: calc(100vh - 4rem);
+  }
+
+  .img {
+    grid-row: 1;
+  }
+}

@@ -8,7 +8,7 @@ function PhotoContent({ data }) {
   return (
     <div className={styles.photo}>
       <div className={styles.img}>
-        <img src={photo.src} alt={photo.title} />
+        <img className={styles.img} src={photo.src} alt={photo.title} />
       </div>
 
       <div className={styles.details}>
