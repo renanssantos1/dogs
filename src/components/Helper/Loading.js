@@ -2,6 +2,28 @@ import React from "react";
 import styles from "./Loading.module.css";
 
 function Loading() {
+  const [step, setStep] = React.useState(3);
+
+  React.useEffect(() => {
+    function updateStep() {
+      setStep((oldStep) => {
+        if (oldStep < 3) {
+          return oldStep + 1;
+        } else return 0;
+      });
+    }
+
+    const interval = setInterval(updateStep, 300);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  function displayStep(index) {
+    return {
+      display: step === index ? "block" : "none",
+    };
+  }
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.loading}>
@@ -12,7 +34,7 @@ function Loading() {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <g style={{ display: "none" }}>
+          <g style={displayStep(0)}>
             <path
               fillRule="evenodd"
               clipRule="evenodd"
@@ -34,7 +56,7 @@ function Loading() {
             />
           </g>
 
-          <g style={{ display: "none" }}>
+          <g style={displayStep(1)}>
             <path
               fillRule="evenodd"
               clipRule="evenodd"
@@ -43,7 +65,7 @@ function Loading() {
             />
           </g>
 
-          <g style={{ display: "none" }}>
+          <g style={displayStep(2)}>
             <path
               fillRule="evenodd"
               clipRule="evenodd"
@@ -65,7 +87,7 @@ function Loading() {
             />
           </g>
 
-          <g style={{ display: "none" }}>
+          <g style={displayStep(3)}>
             <path
               fillRule="evenodd"
               clipRule="evenodd"
